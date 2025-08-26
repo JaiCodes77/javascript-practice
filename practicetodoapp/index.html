@@ -1,0 +1,155 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <style>
+      * {
+        background-color: gray;
+      }
+      .container {
+        margin: 5px;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 50px;
+      }
+
+      #inp {
+        font-size: 10px;
+        padding: 5px;
+        width: 300px;
+        color: black;
+        font-size: 15px;
+      }
+
+      #alltodos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #alltodos {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        gap: 8px;
+      }
+      .todo {
+        background: white;
+        color: black;
+        padding: 8px 12px;
+        border-radius: 5px; 
+        font-size: 16px;
+        width: fit-content;
+      } 
+
+      .completed{
+        text-decoration: line-through;
+        color: gray;
+        opacity: 0.7;
+      }
+      .todo-items{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <input type="text" id="inp" placeholder="type here..." />
+      <button id="addbutton">Add Todo</button>
+    </div>
+
+    <div id="alltodos"></div>
+
+    <div class="filters">
+        <div onclick="renderTodos('all')">All</div>
+        <div onclick="renderTodos('active')">Active</div>
+        <div onclick="renderTodos('completed')">Completed</div>
+    </div>
+    <script>
+      const inputfield = document.getElementById("inp");
+      const addBtn = document.getElementById("addbutton");
+      const allTodos = document.getElementById("alltodos");
+
+      let todos = [];
+
+      function addTodo(){
+         let inpval = inputfield.value.trim();
+        if (inpval === "") return;
+
+        let todoObj = {
+          text: inpval,
+          completed: false,
+        };
+
+        todos.push(todoObj);
+
+        
+        let todoDiv = document.createElement("div");
+        todoDiv.textContent = todoObj.text;
+        todoDiv.classList.add("todo");
+        
+        let markDone = document.createElement("button");
+        markDone.textContent = "Done";
+        markDone.addEventListener('click',()=>{
+            todoDiv.classList.toggle("completed");
+            todoObj.completed = !todoObj.completed;
+        })  
+
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener('click',()=>{
+            containerdiv.remove();
+            todoObj.completed = false;
+        })
+        
+        let containerdiv = document.createElement("div");
+        containerdiv.classList.add("todo-items");
+        containerdiv.append(todoDiv);
+        containerdiv.append(markDone);
+        containerdiv.append(deleteButton);
+
+        allTodos.appendChild(containerdiv);
+
+        inputfield.value = ""; 
+
+      } 
+    
+      addBtn.addEventListener("click",addTodo)
+
+      inputfield.addEventListener('keypress',(e)=>{
+        if(e.key === "Enter"){
+            addTodo();
+        }
+      }) 
+
+      function renderTodos(filter = 'all'){
+        allTodos.textContent = ""; 
+
+        let filtered = todos.filter(todo=>{
+            if(filter==='active'){
+                return !todo.completed;
+            } else if(filter==='completed'){
+                return todo.completed;
+            } 
+            return true;
+        });
+
+        filtered.forEach(todo=>{
+            const div = document.createElement('div');
+            div.textContent = todo.text + (todo.completed? "donedeal" : "")
+            allTodos.appendChild(div)
+        })
+
+      }
+
+    </script>
+  </body>
+</html>

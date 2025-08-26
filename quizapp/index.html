@@ -1,0 +1,172 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz App</title>
+    <style>
+      * {
+        background-color: darkgray;
+        color: white;
+      }
+
+      h2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      #display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+        gap: 20px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 18px;
+      }
+
+      .questionslist {
+        font-weight: medium;
+        font-size: 20px;
+      }
+
+      .optionsholder {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .nextBtn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+      }
+
+      .nextBtn:hover {
+        background-color: blueviolet;
+      }
+
+      #questionsbox {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Quiz App</h2>
+
+    <div id="questionsbox"></div>
+
+    <div id="display"></div>
+
+    <script>
+      let quizList = [
+        {
+          question: "What is the capital of France?",
+          options: ["London", "Berlin", "Paris", "Madrid"],
+          answer: "Paris",
+        },
+        {
+          question: "What is the capital of India?",
+          options: ["Delhi", "Banglore", "Pune", "Mumbai"],
+          answer: "Delhi",
+        },
+        {
+          question: "What is the capital of China?",
+          options: ["Shanghai", "Beijing", "Seoul", "Tokyo"],
+          answer: "Beijing",
+        },
+        {
+            question : 'what is the capital of Uttar Pradesh?',
+            options : ['lucknow','Varanasi','Prayagraj','Ghaziabad'],
+            answer : 'lucknow',
+        },
+        {
+            question : 'what is the capital of Gujrat?',
+            options : ['Ahmedabad','Surat','Mewad','Gandhinagar'],
+            answer : 'Ahmedabad'
+        },
+      ];
+
+      let currentIndex = 0;
+      let score = 0;
+      let display = document.getElementById("display");
+
+      function renderUI() {
+        display.innerHTML = "";
+
+        let showquestionbox = document.getElementById("questionsbox");
+        if (currentIndex < quizList.length) {
+          showquestionbox.textContent = `Question ${currentIndex + 1} of ${
+            quizList.length
+          }`;
+        } else {
+          showquestionbox.textContent = "";
+        }
+
+        if (currentIndex >= quizList.length) {
+          let finalScore = document.createElement("div");
+          finalScore.textContent = `Result Screen :  Your score: ${score} / ${quizList.length}`;
+          display.appendChild(finalScore);
+          return;
+        }
+
+        let quizListQuestion = quizList[currentIndex].question;
+        let quizListOption = quizList[currentIndex].options;
+
+        let questionstext = document.createElement("div");
+        questionstext.classList.add("questionslist");
+        questionstext.textContent = quizListQuestion;
+        display.appendChild(questionstext);
+
+        let optionsHolder = document.createElement("div");
+        optionsHolder.classList.add("optionsholder");
+        display.appendChild(optionsHolder);
+
+        quizListOption.forEach((opt) => {
+          let option = document.createElement("input");
+          option.type = "radio";
+          option.name = "question" + currentIndex;
+          option.value = opt;
+
+          let label = document.createElement("label");
+          label.textContent = opt;
+
+          let optionsline = document.createElement("div");
+          optionsline.appendChild(option);
+          optionsline.appendChild(label);
+
+          optionsHolder.appendChild(optionsline);
+        });
+
+        const nextQuestionBtn = document.createElement("button");
+        nextQuestionBtn.innerText = "[Next Question]";
+        nextQuestionBtn.classList.add("nextBtn");
+        display.appendChild(nextQuestionBtn);
+
+        nextQuestionBtn.addEventListener("click", () => {
+          let selected = document.querySelector(
+            "input[name='question" + currentIndex + "']:checked"
+          );
+
+          if (!selected) {
+            alert("Please select an option!");
+            return;
+          }
+
+          if (selected.value === quizList[currentIndex].answer) {
+            score++;
+          }
+
+          currentIndex++;
+          renderUI();
+        });
+      }
+
+      renderUI();
+    </script>
+  </body>
+</html>

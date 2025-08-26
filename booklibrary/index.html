@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Library</title>
+</head>
+<body>
+  <h1>Book Library</h1>
+
+  <!-- Form to add books -->
+  <input type="text" id="titleInput" placeholder="Book Title">
+  <input type="text" id="authorInput" placeholder="Author">
+  <button id="addBookBtn">Add Book</button>
+
+  <br><br>
+
+  <!-- Filter by author -->
+  <input type="text" id="filterInput" placeholder="Filter by Author">
+
+  <ul id="bookList"></ul>
+
+  <script>
+    let books = [
+      { id: 1, title: "The Hobbit", author: "J.R.R. Tolkien" },
+      { id: 2, title: "1984", author: "George Orwell" },
+      { id: 3, title: "Harry Potter", author: "J.K. Rowling" }
+    ]; 
+
+        const titleInput  = document.getElementById("titleInput");
+        const authorInput = document.getElementById("authorInput");
+        const addBookBtn  = document.getElementById("addBookBtn");
+        const filterInput = document.getElementById("filterInput");
+        const bookList    = document.getElementById("bookList"); 
+
+        function renderBooks(list = books){
+            bookList.innerHTML = "";
+            list.forEach(b=>{
+                const li = document.createElement('li');
+                li.textContent = `${b.title} - ${b.author}`;
+                bookList.appendChild(li);
+            });
+        }
+        renderBooks();
+
+        function addBook(){
+            const title = titleInput.value.trim();
+            const author = authorInput.value.trim();
+            if(!author || !title) return;
+
+            const newBook = {
+                id : Date.now(),
+                title,
+                author
+            };
+            books.push(newBook);
+            titleInput.value = "";
+            authorInput.value = "";
+            renderBooks();
+        } 
+        addBookBtn.addEventListener('click',addBook);
+
+
+  </script>
+</body>
+</html>

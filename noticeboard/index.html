@@ -1,0 +1,128 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice board app</title>
+
+    <style>
+        *{
+            background-color: rgb(79, 2, 2);
+           font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .container{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top: 60px;
+            gap: 15px;
+        } 
+
+        #inp{
+            padding: 8px; 
+            width: 300px;
+            border-radius: 15px;
+            border-color: beige;
+            color: white;
+            box-shadow: 5px 10px 10px black;
+        }
+
+        #addBtn{
+            background-color: whitesmoke;
+            color: black;
+            border-radius: 8px;
+            padding: 4px;
+            box-shadow: 2px 6px 6px black;
+        } 
+
+        #addBtn:hover{
+            background-color: aqua;
+        }
+         #dropdownBtn{
+            background-color: whitesmoke;
+            color: black;
+            border-radius: 8px;
+            padding: 4px;
+            box-shadow: 2px 6px 6px black;
+        } 
+        #dropdownBtn:hover{
+            display: inline-block;
+            background-color: aqua;
+        } 
+        #displaynotices{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; 
+            margin-top: 40px;
+            font-size: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="inp" placeholder="type here..."> 
+        <button id="addBtn">Add notice</button> 
+        <select id="dropdownBtn">
+            <option value="all">All</option>
+            <option value="Urgent">Urgent</option>
+            <option value="General">General</option>
+            <option value="Events">Events</option>
+        </select>
+    </div> 
+
+    <div id="displaynotices">Your notices will be displayed here ></div> 
+
+
+    <script>
+        const inputfield = document.getElementById('inp');
+        const addBtn = document.getElementById('addBtn');
+        const dropdownBtn = document.getElementById('dropdownBtn');
+        const display = document.getElementById('displaynotices');
+        let Notices = [];
+
+        function addNotices(){
+            inpval = inputfield.value.trim();
+            if(inpval==='')return;
+
+            let noticeObj = {
+                text : inpval,
+                category : "General",
+            }
+
+            Notices.push(noticeObj);
+            inputfield.value = "";
+            renderNotices();
+        } 
+        
+        function renderNotices(){
+            display.innerHTML="";  
+
+            let selectedFilter = dropdownBtn.value;
+
+            let filtered = Notices.filter((notice)=>{
+                if(selectedFilter==='all')return true;
+                return  notice.category === selectedFilter;
+            })
+            
+            filtered.forEach((notice)=>{
+                let noticediv = document.createElement("div");
+                noticediv.textContent = `${notice.text}  [${notice.category}]`
+                noticediv.classList.add('notice');
+                display.appendChild(noticediv)
+            })  
+        }
+
+        addBtn.addEventListener('click',addNotices)
+        inputfield.addEventListener('keypress',(e)=>{
+            if(e.key==="Enter"){
+                addNotices(); 
+                inputfield.value = "";
+            }else{
+                return;
+            }
+        })
+    </script>
+</body>
+</html>

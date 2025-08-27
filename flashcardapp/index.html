@@ -1,0 +1,151 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlashCards</title>
+    <style>
+      * {
+        background-color: rgb(150, 59, 59);
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, rgba(82, 2, 2, 0.766), rgb(119, 119, 107));
+        color: #f5f5f5;
+      }
+
+      h2 {
+        font-weight: 700;
+        color: burlywood;
+        margin-bottom: 90px;
+      }
+
+      #flashcard-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 4px;
+        margin: 3px;
+        gap: 10px;
+        border-radius: 10px;
+        border: 3px solid aliceblue;
+        width: 500px;
+        height: 400px;
+        box-shadow: 0 8px 20px black;
+      }
+
+      #flashcard-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 28px black;
+      }
+
+      #display{
+        font-size: 25px;
+        font-style: italic;
+        margin-bottom: 60px;
+        color: antiquewhite;
+      }
+
+      #btnContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+      }
+      button {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+
+        background: rgb(210, 210, 197);
+        color: brown;
+      }
+
+      button:hover {
+        background: beige;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="flashcard-container">
+      <h2>FlashCards-App</h2>
+      <div id="display"></div>
+
+      <div id="btnContainer">
+        <button id="nextBtn">Next</button>
+        <button id="flipBtn">Flip</button>
+        <button id="prevBtn">Prev</button>
+      </div>
+    </div>
+
+    <script>
+      const flashcardQuestions = [
+        {
+          question: "what is the capital of the US?",
+          answer: "New York",
+        },
+        {
+          question: "what is the capital of Canada?",
+          answer: "Ottawa",
+        },
+        {
+          question: "what is the capital of Australia?",
+          answer: "Brisbane",
+        },
+        {
+          question: "what is the capital of the UK?",
+          answer: "London",
+        },
+        {
+          question: "what is the capital of Japan?",
+          answer: "Tokyo",
+        },
+      ];
+
+      let display = document.getElementById("display");
+      let nextBtn = document.getElementById("nextBtn");
+      let flipBtn = document.getElementById("flipBtn");
+      let prevBtn = document.getElementById("prevBtn");
+
+      let currentIndex = 0;
+      let isFlipped = false;
+
+      function renderCard() {
+        let card = flashcardQuestions[currentIndex];
+        display.textContent = isFlipped ? card.answer : card.question;
+      }
+
+      flipBtn.addEventListener("click", () => {
+        isFlipped = !isFlipped;
+        renderCard();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % flashcardQuestions.length;
+        isFlipped = false;
+        renderCard();
+      });
+
+      prevBtn.addEventListener("click", () => {
+        currentIndex--;
+        if (currentIndex < 0) {
+          return (currentIndex = flashcardQuestions.length - 1);
+        }
+        renderCard();
+      });
+
+      renderCard();
+    </script>
+  </body>
+</html>

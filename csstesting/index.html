@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css Testing</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: gray;
+        } 
+
+        #container{
+            height: 100%;
+            width: 100%;
+            display: grid;
+            grid-template-rows: repeat(4,1fr);
+            grid-template-columns: repeat(3,1fr);
+            gap: 15px;
+        }
+
+        .items{
+            color: purple;
+            background-color: blueviolet;
+        }
+
+        .header, .footer{
+            grid-column: 1/-1;
+        } 
+
+        .sidebar {
+            grid-row: 2/4;
+        }
+
+        .content{
+            grid-column: 2/4;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="items header">item 1</div>
+        <div class="items sidebar">item 2</div>
+        <div class="items content">item 3</div>
+        <div class="items">item 4</div>
+        <div class="items">item 4</div>
+        <div class="items footer">item 5</div>
+    </div>
+</body>
+</html>

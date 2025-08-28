@@ -39,11 +39,11 @@ function addCartListeners() {
     btn.addEventListener('click', () => {
       count++;
       const counter = document.getElementById('counter');
-      counter.textContent = `Products in the cart [${count}]`;
+      counter.textContent = `Products in the cart [${count}]`; 
     });
   }
 }
-
+        
 renderProducts('All');
 
 

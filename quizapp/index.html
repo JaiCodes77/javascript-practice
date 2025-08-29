@@ -93,7 +93,9 @@
 
       let currentIndex = 0;
       let score = 0;
-      let display = document.getElementById("display");
+      let display = document.getElementById("display"); 
+
+      let userAnswers = [null,null,null,null,null];
 
       function renderUI() {
         display.innerHTML = "";
@@ -139,8 +141,13 @@
           optionsline.appendChild(option);
           optionsline.appendChild(label);
 
-          optionsHolder.appendChild(optionsline);
-        });
+          optionsHolder.appendChild(optionsline); 
+
+          option.addEventListener('change',()=>{
+            userAnswers[currentIndex] = opt;
+            console.log(userAnswers);
+          })
+        }); 
 
         const nextQuestionBtn = document.createElement("button");
         nextQuestionBtn.innerText = "[Next Question]";
@@ -148,24 +155,22 @@
         display.appendChild(nextQuestionBtn);
 
         nextQuestionBtn.addEventListener("click", () => {
-          let selected = document.querySelector(
-            "input[name='question" + currentIndex + "']:checked"
-          );
+          
+          if(!userAnswers[currentIndex]){
+            alert('pick an option!');
+          } 
 
-          if (!selected) {
-            alert("Please select an option!");
-            return;
-          }
-
-          if (selected.value === quizList[currentIndex].answer) {
-            score++;
+          if(userAnswers[currentIndex]===quizList[currentIndex].answer){
+              score++;
           }
 
           currentIndex++;
-          renderUI();
-        });
-      }
 
+          renderUI();
+        }); 
+      
+      }
+    
       renderUI();
     </script>
   </body>

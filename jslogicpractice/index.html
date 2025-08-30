@@ -1,0 +1,68 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>js logic practice</title>
+
+    <style>
+      * {
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let arr = [
+        { id: 1, text: "Jai", completed: false },
+        { id: 2, text: "Jan", completed: true },
+        { id: 3, text: "Jaia", completed: false },
+        { id: 4, text: "Jain", completed: true },
+        { id: 5, text: "Jona", completed: false },
+      ];
+
+      function toggleTodo(id) {
+        arr = arr.map((todo) =>
+          todo.id === id ? { ...todo, completed: !todo.completed } : todo
+        );
+      }
+
+      function deleteTodo(id) {
+        let newarr = arr.filter((todo) => todo.id !== id);
+        return this.newarr; 
+      }
+    
+      console.log(deleteTodo(2));
+
+      function editToggle(id,text){
+        arr = arr.map((todo)=>{
+            if(todo.id === id) {
+                todo.text = text;
+            } 
+            return todo;
+        })
+        return arr;
+      } 
+      editToggle(2,'Updated Jaia!'); 
+
+      function completedTodos(){
+        arr=arr.filter(p=>p.completed===true);
+        return arr;
+      } 
+
+      function activeTodos(){
+        arr = arr.filter(p=>!p.completed);
+        return arr;
+      } 
+
+      function toggleTodo(id){
+        arr = arr.map((todo)=>{
+          todo.id === id ? {...todo, completed : !todo.completed} : todo;
+        } 
+        )
+      }
+      toggleTodo(2)
+
+
+    </script>
+  </body>
+</html>

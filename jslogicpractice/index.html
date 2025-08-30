@@ -71,6 +71,38 @@
       }
 
       updateTodoText(2, "hi there");
+
+      function deleteTodo(id){
+        if(id===arr.id){
+          arr = arr.filter(todo=>!todo);
+        } 
+
+        return arr;
+      }
+
+      function clearAllTodos(){
+        let len = arr.length;
+        while(len>0){
+          arr.pop;
+        }
+        return arr;
+      } 
+
+      function getActiveTodos(){
+        arr = arr.filter(todo=>!todo.completed)
+        return arr;
+      }
+
+      function getCompletedTodos(){
+        return arr.filter(todo=>todo.completed);
+      } 
+
+      function countTodos(){
+        let total = arr.length;
+        let arr1 = arr.filter(todo=>!todo.completed)
+        let arr2 = arr.filter(todo=>todo.completed)
+        return {total,arr1,arr2}
+      }
     </script>
   </body>
 </html>

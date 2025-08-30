@@ -28,41 +28,49 @@
 
       function deleteTodo(id) {
         let newarr = arr.filter((todo) => todo.id !== id);
-        return this.newarr; 
+        return this.newarr;
       }
-    
+
       console.log(deleteTodo(2));
 
-      function editToggle(id,text){
-        arr = arr.map((todo)=>{
-            if(todo.id === id) {
-                todo.text = text;
-            } 
-            return todo;
-        })
+      function editToggle(id, text) {
+        arr = arr.map((todo) => {
+          if (todo.id === id) {
+            todo.text = text;
+          }
+          return todo;
+        });
         return arr;
-      } 
-      editToggle(2,'Updated Jaia!'); 
-
-      function completedTodos(){
-        arr=arr.filter(p=>p.completed===true);
-        return arr;
-      } 
-
-      function activeTodos(){
-        arr = arr.filter(p=>!p.completed);
-        return arr;
-      } 
-
-      function toggleTodo(id){
-        arr = arr.map((todo)=>{
-          todo.id === id ? {...todo, completed : !todo.completed} : todo;
-        } 
-        )
       }
-      toggleTodo(2)
+      editToggle(2, "Updated Jaia!");
 
+      function completedTodos() {
+        arr = arr.filter((p) => p.completed === true);
+        return arr;
+      }
 
+      function activeTodos() {
+        arr = arr.filter((p) => !p.completed);
+        return arr;
+      }
+
+      function toggleTodo(id) {
+        arr = arr.map((todo) => {
+          todo.id === id ? { ...todo, completed: !todo.completed } : todo;
+        });
+      }
+      toggleTodo(2);
+
+      function updateTodoText(id, newText) {
+        arr = arr.map((todo) =>
+          todo.id === id
+            ? { ...todo, text: newText } // overwrite text only
+            : todo
+        );
+        return arr;
+      }
+
+      updateTodoText(2, "hi there");
     </script>
   </body>
 </html>

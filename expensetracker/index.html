@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1a2a2;
+      padding: 20px;
+    }
+    .expense {
+      background: white;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Expense Tracker</h2>
+  <input type="number" id="idinp" placeholder="ID">
+  <input type="text" id="descriptioninp" placeholder="Description">
+  <input type="number" id="amountinp" placeholder="Amount">
+  <button id="addExpenseBtn">Add Expense</button>
+
+  <h3>Expenses:</h3>
+  <div id="display"></div>
+
+  <script>
+    let expenses = [
+      { id: 1, description: 'Groceries', amount: 50 },
+      { id: 2, description: 'Utilities', amount: 75 },
+      { id: 3, description: 'Rent', amount: 1200 }
+    ];  
+
+    const idInp = document.getElementById('idinp');
+    const descInp = document.getElementById('descriptioninp');
+    const amountInp = document.getElementById('amountinp');
+    const display = document.getElementById('display');
+    const addExpenseBtn = document.getElementById('addExpenseBtn');
+
+    
+    function renderExpenses() {
+      display.innerHTML = "";
+      expenses.forEach(exp => {
+        const div = document.createElement("div");
+        div.className = "expense";
+        div.textContent = `${exp.id}. ${exp.description} - $${exp.amount}`;
+        display.appendChild(div);
+      });
+    }
+
+    
+    addExpenseBtn.addEventListener("click", () => {
+      const newExpense = {
+        id:idInp.value,
+        description: descInp.value,
+        amount:amountInp.value
+      };
+      expenses.push(newExpense);
+      renderExpenses();
+      idInp.value = "";
+      descInp.value = "";
+      amountInp.value = "";
+    });
+
+    renderExpenses();
+  </script>
+</body>
+</html>

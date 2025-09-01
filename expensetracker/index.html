@@ -50,7 +50,14 @@
         expenses.forEach((exp) => {
           const div = document.createElement("div");
           div.className = "expense";
-          div.textContent = `${exp.id}. ${exp.description} - $${exp.amount}`;
+          div.innerHTML = `${exp.id}. ${exp.description} - $${exp.amount}
+          <button class='delBtn'>Delete</button>`;
+
+          const delBtn = div.querySelector(".delBtn");
+          delBtn.addEventListener("click", () => {
+            expenses = expenses.filter((e) => e.id != exp.id);
+            renderExpenses();
+          });
           display.appendChild(div);
         });
       }
@@ -70,7 +77,8 @@
 
       totalAmountbtn.addEventListener("click", () => {
         let total = expenses.reduce(
-          (acc, expense) => acc + Number(expense.amount),0
+          (acc, expense) => acc + Number(expense.amount),
+          0
         );
         displayTotal.textContent = total;
       });
